@@ -1856,7 +1856,8 @@ public class IceUdpTransportManager
      */
     private void onIceConnected()
     {
-        iceConnected = true;
+        String lastChID = ""; // Used in order to prevent channels duplication
+    	iceConnected = true;
 
         EventAdmin eventAdmin = conference.getVideobridge().getEventAdmin();
         if (eventAdmin != null)
@@ -1864,7 +1865,12 @@ public class IceUdpTransportManager
 
         for (Channel channel : getChannels())
         {
-            channel.transportConnected();
+        	if (channel.getID().equals(lastChID))
+        		logger.warn("Duplicated channel " + channel.getID());
+        	else {
+        		channel.transportConnected();
+        		lastChID = channel.getID();
+        	}
         }
     }
 
