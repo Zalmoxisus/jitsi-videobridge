@@ -614,6 +614,7 @@ public abstract class Channel
         {
             Endpoint oldValue = this.endpoint;
 
+            logger.info("setEndpoint");
             // Is the endpoint really changing?
             if (oldValue == null)
             {
@@ -624,6 +625,8 @@ public abstract class Channel
             {
                 return;
             }
+            if (oldValue != null) logger.info("oldValue: "+oldValue.getID());
+            if (endpoint != null) logger.info("endpoint: "+endpoint);
 
             // The endpoint is really changing.
             Endpoint newValue
